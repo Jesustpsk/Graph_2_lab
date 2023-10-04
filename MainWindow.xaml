@@ -129,13 +129,24 @@
             </TextBox>
             
             <Button Grid.Row="0" Grid.Column="1"
-                    Margin="100 250 100 180"
+                    Margin="100 195 100 235"
                     Click="BExecute_Click">Выполнить
             </Button>
             
             <Label Grid.Row = "6" Grid.Column="0"
                    Margin="12 0 0 -50"
-                   Visibility="Hidden" Name="Lxy">Координаты точки: NULL</Label>
+                   Visibility="Hidden" Name="Lxy">Координаты точки: NULL
+            </Label>
+            <TextBox Grid.Row = "0" Grid.Column="1" Height="100"
+                     IsReadOnly="True" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"
+                       Margin="0 150 270 0" TextWrapping="Wrap"
+                       Visibility="Hidden" Name="LListCord">Координаты вершин: 
+            </TextBox>
+            <TextBox Grid.Row = "0" Grid.Column="1" Height="100"
+                     IsReadOnly="True" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"
+                     Margin="270 150 0 0" TextWrapping="Wrap"
+                     Visibility="Hidden" Name="LListCord2">Координаты вершин: 
+            </TextBox>
         </Grid>
     </StackPanel>
 </Window>

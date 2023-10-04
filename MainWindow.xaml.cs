@@ -52,16 +52,16 @@ public partial class MainWindow
 
     private void Canvas_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        MouseLbd(e, CBox, CanvasPolygon, Lxy);
+        MouseLbd(e, CBox, CanvasPolygon, Lxy, LListCord);
     }
     private void BClear_Click(object sender, RoutedEventArgs e)
     {
         Clear(CanvasPolygon, Canvas2Polygon, CBox, LMove, TbMove, LScaling, TbScaling, LReflection, Lxy, LRotation,
-            TbRotation);
+            TbRotation, LListCord, LListCord2);
     }
     private void BExecute_Click(object sender, RoutedEventArgs e)
     {
-        Execute(CBox, Canvas2Polygon, TbMove, TbScaling, TbRotation);
+        Execute(CBox, Canvas2Polygon, TbMove, TbScaling, TbRotation, LListCord2);
     }
 
     #region COMBO BOX

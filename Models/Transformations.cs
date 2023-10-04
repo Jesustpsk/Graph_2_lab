@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
-
+using static System.Int32;
 using static Graph_2_lab.Models.Auxiliary_Functions_Transform;
 using static Graph_2_lab.Models.Drawing;
 
@@ -13,7 +13,7 @@ public abstract class Transformations : MainWindow
 {
     public static void Move(Canvas canvas, TextBox tbMove)
     {
-        Int32.TryParse(tbMove.Text, out int count);
+        TryParse(tbMove.Text, out var count);
         DrawTempPolygon(canvas, count);
     }
 
@@ -65,7 +65,7 @@ public abstract class Transformations : MainWindow
     {
         var selectedVertex = TakeDot(dot);
         if (selectedVertex is { X: -1, Y: -1 }) return;
-        Int32.TryParse(textBox.Text, out int angle);
+        TryParse(textBox.Text, out var angle);
         var angleRadian = angle * Math.PI / 180;
         for (var j = 0; j < TempPoints.Count; j++)
         {
