@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
@@ -19,19 +20,24 @@ public abstract class Transformations : MainWindow
     public static void Scaling(Canvas canvas, Line selectedLine, TextBox scale)
     {
         var replace = scale.Text.Contains('.') ? scale.Text.Replace('.', ',') : scale.Text;
-        var dscale = Double.Parse(replace);
+        var scaleFactor = double.Parse(replace);
 
-        if (dscale == 0) return;
-        for (var i = 0; i < TempPoints.Count; i++)
+        if (scaleFactor == 0) return;
+        var startPoint = new Point(selectedLine.X1, selectedLine.Y1);
+        var endPoint = new Point(selectedLine.X2, selectedLine.Y2);
+
+        for (var i = 0; i < Points.Count; i++)
         {
-            if (TempPoints[i] != new Point(selectedLine.X1, selectedLine.Y1) &&
-                TempPoints[i] != new Point(selectedLine.X2, selectedLine.Y2))
-                TempPoints[i] = new Point(TempPoints[i].X * dscale, TempPoints[i].Y * dscale);
-            //переделать скейлинг
-            // можно сравнить координаты точек и линий разметки
-            // и в зависимости от расстояния понять где лежит точка и ее сторона
+            if (Points[i] == startPoint || Points[i] == endPoint)
+            {
+                continue;
+            }
+            var scaledPoint = new Point(
+                startPoint.X + (Points[i].X - startPoint.X) * scaleFactor,
+                startPoint.Y + (Points[i].Y - startPoint.Y) * scaleFactor
+            );
+            TempPoints[i] = scaledPoint;
         }
-
         DrawTempPolygon(canvas);
     }
 
