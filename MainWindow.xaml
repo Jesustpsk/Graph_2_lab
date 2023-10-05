@@ -147,6 +147,40 @@
                      Margin="270 150 0 0" TextWrapping="Wrap"
                      Visibility="Hidden" Name="LListCord2">Координаты вершин: 
             </TextBox>
+           <TextBox Grid.Row="0" Grid.Column="1"
+                    Margin="0 300 390 0" Width="50" Height="30"
+                    Name="TbM11" Visibility="Hidden">
+           </TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Margin="0 300 280 0" Width="50" Height="30"
+                     Name="TbM12" Visibility="Hidden">
+            </TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Margin="0 300 170 0" Width="50" Height="30"
+                     Name="TbB1" Visibility="Hidden">
+            </TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Margin="0 380 390 0" Width="50" Height="30"
+                     Name="TbM21" Visibility="Hidden">
+            </TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Margin="0 380 280 0" Width="50" Height="30"
+                     Name="TbM22" Visibility="Hidden">
+            </TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Margin="0 380 170 0" Width="50" Height="30"
+                     Name="TbB2" Visibility="Hidden">
+            </TextBox>
+            <Button Grid.Row = "0" Grid.Column="1"
+                    Margin="270 300 0 0" Height="30"
+                    Name="BApply" Click="BApply_OnClick"
+                    Visibility="Hidden">Применить
+            </Button>
+            <Button Grid.Row = "0" Grid.Column="1"
+                    Margin="270 380 0 0" Height="30"
+                    Name="BApplyForMain" Click="BApplyForMain_OnClick_OnClick"
+                    Visibility="Hidden">Применить матрицу к изначальной фигуре
+            </Button>
         </Grid>
     </StackPanel>
 </Window>

@@ -1,10 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Shapes;
 using static Graph_2_lab.Models.Buttons;
 using static Graph_2_lab.Models.Drawing;
-
+using static Graph_2_lab.Models.AMatrix;
 namespace Graph_2_lab;
 
 /// <summary>
@@ -15,7 +20,8 @@ public partial class MainWindow
     protected static readonly List<Point> Points = new();
     protected static List<Point> TempPoints = new();
     protected static Point SelectedDot = new(-1, -1);
-
+    protected static List<TextBox> Matr = new();
+    
     protected static Line SelectedLine = new Line
     {
         X1 = -1,
@@ -29,8 +35,18 @@ public partial class MainWindow
         InitializeComponent();
         MessageBox.Show("Выполнил: Кузьмин Дмитрий\nВариант: 11\nТема: Афинные Преобразования",
             "Лабораторная работа №2");
+        Matr_Loaded();
     }
 
+    private void Matr_Loaded()
+    {
+        Matr.Add(TbM11);
+        Matr.Add(TbM12);
+        Matr.Add(TbB1);
+        Matr.Add(TbM21);
+        Matr.Add(TbM22);
+        Matr.Add(TbB2);
+    }
     #region CANVAS
     private void canvas_Loaded(object sender, RoutedEventArgs e)
     {
@@ -57,11 +73,11 @@ public partial class MainWindow
     private void BClear_Click(object sender, RoutedEventArgs e)
     {
         Clear(CanvasPolygon, Canvas2Polygon, CBox, LMove, TbMove, LScaling, TbScaling, LReflection, Lxy, LRotation,
-            TbRotation, LListCord, LListCord2);
+            TbRotation, LListCord, LListCord2, BApplyForMain, Matr, BApply);
     }
     private void BExecute_Click(object sender, RoutedEventArgs e)
     {
-        Execute(CBox, Canvas2Polygon, TbMove, TbScaling, TbRotation, LListCord2);
+        Execute(CBox, Canvas2Polygon, TbMove, TbScaling, TbRotation, LListCord2, BApplyForMain, Matr, BApply);
     }
 
     #region COMBO BOX
@@ -118,4 +134,15 @@ public partial class MainWindow
     }
 
     #endregion
+    
+
+    private void BApplyForMain_OnClick_OnClick(object sender, RoutedEventArgs e)
+    {
+        ApplyForMain(Matr);
+    }
+
+    private void BApply_OnClick(object sender, RoutedEventArgs e)
+    {
+        throw new System.NotImplementedException();
+    }
 }

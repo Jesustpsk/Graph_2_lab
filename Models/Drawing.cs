@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -438,5 +439,33 @@ public abstract class Drawing : MainWindow
                 canvas.Children.Add(closingLine);
             }
         }
+    }
+    
+
+    public static Path ConvertToPath(List<Point> points)
+    {
+        Path path = new()
+        {
+            Stroke = Brushes.Blue,
+            StrokeThickness = 1
+        };
+        PathGeometry pathGeometry = new();
+        PathFigure pathFigure = new()
+        {
+            StartPoint = points[0]
+        };
+        List<LineSegment> lineSegments = new();
+        for (var i = 1; i < points.Count; i++)
+        {
+            LineSegment lineSegment = new(points[i], true);
+            lineSegments.Add(lineSegment);
+        }
+        LineSegment closeSegment = new(points[0], true);
+        lineSegments.Add(closeSegment);
+        pathFigure.Segments = new PathSegmentCollection(lineSegments);
+        pathGeometry.Figures.Add(pathFigure);
+        path.Data = pathGeometry;
+
+        return path;
     }
 }

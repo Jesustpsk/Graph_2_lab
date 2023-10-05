@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using static Graph_2_lab.Models.Auxiliary_Functions_Transform;
 using static Graph_2_lab.Models.Drawing;
 using static Graph_2_lab.Models.Transformations;
+using static Graph_2_lab.Models.AMatrix;
+
 namespace Graph_2_lab.Models;
 
 public abstract class Buttons : MainWindow
@@ -45,14 +51,16 @@ public abstract class Buttons : MainWindow
         listcord.Text += "(" + e.GetPosition(canvas) + "), ";
     }
 
-    private static void GiveCord(TextBox listcord)
+    private static void GiveCord(TextBox listcord) //переделать
     {
         foreach (var tp in TempPoints)
         {
             listcord.Text += "(" + (int)tp.X + ";" + (int)tp.Y + "), ";
         }
     }
-    public static void Clear(Canvas canvas1, Canvas canvas2, ComboBox cbox, Label lmove, TextBox tbmove, TextBlock lscaling, TextBox tbscaling, Label lref, Label xy, TextBlock lrot, TextBox tbrot, TextBox listcord, TextBox listcord2)
+    public static void Clear(Canvas canvas1, Canvas canvas2, ComboBox cbox, Label lmove, TextBox tbmove, TextBlock lscaling, 
+        TextBox tbscaling, Label lref, Label xy, TextBlock lrot, TextBox tbrot, TextBox listcord, TextBox listcord2, 
+        Button applyMain, List<TextBox> lbox, Button apply)
     {
         Points.Clear();
         canvas1.Children.Clear();
@@ -72,32 +80,73 @@ public abstract class Buttons : MainWindow
         listcord.Text = "Координаты вершин: ";
         listcord2.Visibility = Visibility.Hidden;
         listcord2.Text = "Координаты вершин: ";
+        applyMain.Visibility = Visibility.Hidden;
+        foreach (var l in lbox)
+        {
+            l.Text = "";
+            l.Visibility = Visibility.Hidden;
+        }
+
+        apply.Visibility = Visibility.Hidden;
     }
 
-    public static void Execute(ComboBox cbox, Canvas canvas, TextBox tbmove, TextBox tbscaling, TextBox tbrot, TextBox listcord)
+    public static void Execute(ComboBox cbox, Canvas canvas, TextBox tbmove, TextBox tbscaling, TextBox tbrot, 
+        TextBox listcord, Button applyMain, List<TextBox> lbox, Button apply)
     {
         if (Points.Count == 0) return;
         TempPoints = Points;
         listcord.Text = "Координаты вершин: ";
         listcord.Visibility = Visibility.Visible;
+        applyMain.Visibility = Visibility.Visible;
+        apply.Visibility = Visibility.Visible;
+        foreach (var l in lbox)
+        {
+            l.Text = "";
+            l.Visibility = Visibility.Visible;
+        }
         switch (cbox.SelectedIndex)
         {
             case 0:
-                Move(canvas, tbmove);
+                canvas.Children.Clear();
+                Move(canvas, tbmove, lbox);
                 GiveCord(listcord);
                 break;
             case 1:
-                Scaling(canvas, SelectedLine, tbscaling);
+                canvas.Children.Clear();
+                Scaling(canvas, SelectedLine, tbscaling, lbox);
                 GiveCord(listcord);
                 break;
             case 2:
-                Reflection(canvas, SelectedDot);
+                canvas.Children.Clear();
+                Reflection(canvas, SelectedDot, lbox);
                 GiveCord(listcord);
                 break;
             case 3:
-                Rotation(canvas, SelectedDot, tbrot);
+                canvas.Children.Clear();
+                Rotation(canvas, SelectedDot, tbrot, lbox);
                 GiveCord(listcord);
                 break;
         }
+    }
+
+    public static void Apply(List<TextBox> lbox)
+    {
+        var lmatr = new List<String>()
+        {
+            lbox[0].Text, lbox[1].Text, lbox[4].Text, lbox[2].Text, lbox[3].Text, lbox[5].Text
+        };
+        var smatr = String.Join(";", lmatr);
+        smatr = smatr.Remove(smatr.Length - 1, 1);
+        var matrix = Matrix.Parse(smatr);
+    }
+    public static void ApplyForMain(List<TextBox> lbox)
+    {
+        var lmatr = new List<String>()
+        {
+            lbox[0].Text, lbox[1].Text, lbox[4].Text, lbox[2].Text, lbox[3].Text, lbox[5].Text
+        };
+        var smatr = string.Join(";", lmatr);
+        smatr = smatr.Remove(smatr.Length - 1, 1);
+        var matrix = Matrix.Parse(smatr);
     }
 }
