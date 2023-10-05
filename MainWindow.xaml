@@ -174,12 +174,12 @@
             <Button Grid.Row = "0" Grid.Column="1"
                     Margin="270 300 0 0" Height="30"
                     Name="BApply" Click="BApply_OnClick"
-                    Visibility="Hidden">Применить
+                    Visibility="Hidden" IsEnabled="False">Применить
             </Button>
             <Button Grid.Row = "0" Grid.Column="1"
                     Margin="270 380 0 0" Height="30"
                     Name="BApplyForMain" Click="BApplyForMain_OnClick_OnClick"
-                    Visibility="Hidden">Применить матрицу к изначальной фигуре
+                    Visibility="Hidden">Применить матрицу к исходной фигуре
             </Button>
         </Grid>
     </StackPanel>
