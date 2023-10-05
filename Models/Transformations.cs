@@ -22,7 +22,7 @@ public abstract class Transformations : MainWindow
         var path = ConvertToPath(TempPoints);
         canvas.Children.Add(path);
     }
-
+    
     /*public static void Scaling(Canvas canvas, Line selectedLine, TextBox scale)
     {
         var replace = scale.Text.Contains('.') ? scale.Text.Replace('.', ',') : scale.Text;

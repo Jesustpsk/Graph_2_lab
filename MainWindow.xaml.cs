@@ -17,7 +17,7 @@ namespace Graph_2_lab;
 /// </summary>
 public partial class MainWindow
 {
-    protected static readonly List<Point> Points = new();
+    protected static List<Point> Points = new();
     protected static List<Point> TempPoints = new();
     protected static Point SelectedDot = new(-1, -1);
     protected static List<TextBox> Matr = new();
@@ -138,7 +138,12 @@ public partial class MainWindow
 
     private void BApplyForMain_OnClick_OnClick(object sender, RoutedEventArgs e)
     {
-        ApplyForMain(Matr);
+        Points = TempPoints;
+        Canvas2Polygon.Children.Clear();
+        CanvasPolygon.Children.Clear();
+        LListCord.Text = "Координаты вершин: ";
+        LListCord2.Text = "Координаты вершин: ";
+        ApplyForMain(CanvasPolygon, Points, LListCord);
     }
 
     private void BApply_OnClick(object sender, RoutedEventArgs e)

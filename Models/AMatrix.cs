@@ -9,6 +9,7 @@ namespace Graph_2_lab.Models;
 
 public abstract class AMatrix : MainWindow
 {
+    #region TRANSFORM WITHOUT MATRIX
     public static Matrix MScale(double scale, Line line)
     {
         Point p1, p2;
@@ -73,7 +74,8 @@ public abstract class AMatrix : MainWindow
         }
         return matrix;
     }
-
+    #endregion
+    
     public static void Fillmatrix(List<TextBox> lbox, Matrix matrix)
     {
         var m = matrix.ToString().Split(';');

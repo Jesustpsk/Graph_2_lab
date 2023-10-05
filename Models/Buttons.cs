@@ -51,11 +51,21 @@ public abstract class Buttons : MainWindow
         listcord.Text += "(" + e.GetPosition(canvas) + "), ";
     }
 
-    private static void GiveCord(TextBox listcord) //переделать
+    private static void GiveCord(TextBox listcord, bool temp) 
     {
-        foreach (var tp in TempPoints)
+        if (temp)
         {
-            listcord.Text += "(" + (int)tp.X + ";" + (int)tp.Y + "), ";
+            foreach (var tp in TempPoints)
+            {
+                listcord.Text += "(" + (int)tp.X + ";" + (int)tp.Y + "), ";
+            }
+        }
+        else
+        {
+            foreach (var p in Points)
+            {
+                listcord.Text += "(" + (int)p.X + ";" + (int)p.Y + "), ";
+            }
         }
     }
     public static void Clear(Canvas canvas1, Canvas canvas2, ComboBox cbox, Label lmove, TextBox tbmove, TextBlock lscaling, 
@@ -109,44 +119,44 @@ public abstract class Buttons : MainWindow
             case 0:
                 canvas.Children.Clear();
                 Move(canvas, tbmove, lbox);
-                GiveCord(listcord);
+                GiveCord(listcord, true);
                 break;
             case 1:
                 canvas.Children.Clear();
                 Scaling(canvas, SelectedLine, tbscaling, lbox);
-                GiveCord(listcord);
+                GiveCord(listcord, true);
                 break;
             case 2:
                 canvas.Children.Clear();
                 Reflection(canvas, SelectedDot, lbox);
-                GiveCord(listcord);
+                GiveCord(listcord, true);
                 break;
             case 3:
                 canvas.Children.Clear();
                 Rotation(canvas, SelectedDot, tbrot, lbox);
-                GiveCord(listcord);
+                GiveCord(listcord, true);
                 break;
         }
     }
 
-    public static void Apply(List<TextBox> lbox)
+    private static Matrix GetMatrix(List<TextBox> lbox)
     {
         var lmatr = new List<String>()
         {
             lbox[0].Text, lbox[1].Text, lbox[4].Text, lbox[2].Text, lbox[3].Text, lbox[5].Text
         };
-        var smatr = String.Join(";", lmatr);
-        smatr = smatr.Remove(smatr.Length - 1, 1);
+        var smatr = String.Join(",", lmatr);
         var matrix = Matrix.Parse(smatr);
+        return matrix;
     }
-    public static void ApplyForMain(List<TextBox> lbox)
+    public static void Apply(Canvas canvas, TextBox listcord)
     {
-        var lmatr = new List<String>()
-        {
-            lbox[0].Text, lbox[1].Text, lbox[4].Text, lbox[2].Text, lbox[3].Text, lbox[5].Text
-        };
-        var smatr = string.Join(";", lmatr);
-        smatr = smatr.Remove(smatr.Length - 1, 1);
-        var matrix = Matrix.Parse(smatr);
+        
+    }
+    public static void ApplyForMain(Canvas canvas, List<Point> Points, TextBox listcord)
+    {
+        var path = ConvertToPath(Points);
+        canvas.Children.Add(path);
+        GiveCord(listcord, false);
     }
 }
