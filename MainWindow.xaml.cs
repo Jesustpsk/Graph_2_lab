@@ -46,6 +46,9 @@ public partial class MainWindow
         Matr.Add(TbM21);
         Matr.Add(TbM22);
         Matr.Add(TbB2);
+        Matr.Add(TbM31);
+        Matr.Add(TbM32);
+        Matr.Add(TbB3);
     }
     #region CANVAS
     private void canvas_Loaded(object sender, RoutedEventArgs e)

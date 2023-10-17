@@ -62,7 +62,7 @@
                    Margin="105 60 280 0">Выберите действие:
             </Label>
             <ComboBox Grid.Row="0" Grid.Column="1"
-                      Margin="225 50 100 375"
+                      Margin="225 70 100 375"
                       Name="CBox">
                 <ComboBoxItem Selected="CBItem_Move_Selected">
                     <StackPanel>
@@ -170,6 +170,18 @@
             <TextBox Grid.Row="0" Grid.Column="1"
                      Margin="0 380 170 0" Width="50" Height="30"
                      Name="TbB2" Visibility="Hidden">
+            </TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Margin="0 460 390 0" Width="50" Height="30"
+                     Name="TbM31" Visibility="Hidden">
+            </TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Margin="0 460 280 0" Width="50" Height="30"
+                     Name="TbM32" Visibility="Hidden">
+            </TextBox>
+            <TextBox Grid.Row="0" Grid.Column="1"
+                     Margin="0 460 170 0" Width="50" Height="30"
+                     Name="TbB3" Visibility="Hidden">
             </TextBox>
             <Button Grid.Row = "0" Grid.Column="1"
                     Margin="270 300 0 0" Height="30"
