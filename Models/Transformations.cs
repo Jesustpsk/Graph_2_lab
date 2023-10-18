@@ -19,7 +19,7 @@ public abstract class Transformations : MainWindow
         TempPoints = Points;
         var matrix = TranslateAlongX(count);
         Fillmatrix(lbox, matrix);
-        var path = ConvertToPath(ApplyTransformation(TempPoints,matrix));
+        var path = ConvertToPath(ApplyTransformation(TempPoints,matrix, null,null));
         canvas.Children.Add(path);
     }
     
@@ -42,7 +42,7 @@ public abstract class Transformations : MainWindow
         TempPoints = Points;
         var matrix = ReflectAboutVertex(dot);
         Fillmatrix(lbox, matrix);
-        var path = ConvertToPath(ApplyTransformation(TempPoints,matrix));
+        var path = ConvertToPath(ApplyTransformation(TempPoints,matrix, null, null));
         canvas.Children.Add(path);
     }
     public static void Rotation(Canvas canvas, Point dot, TextBox textBox, List<TextBox> lbox)
@@ -53,7 +53,7 @@ public abstract class Transformations : MainWindow
         TempPoints = Points;
         var matrix = RotateAroundVertex(angle, dot);
         Fillmatrix(lbox, matrix);
-        var path = ConvertToPath(ApplyTransformation(TempPoints,matrix));
+        var path = ConvertToPath(ApplyTransformation(TempPoints,matrix,null,null));
         canvas.Children.Add(path);
     }
 }

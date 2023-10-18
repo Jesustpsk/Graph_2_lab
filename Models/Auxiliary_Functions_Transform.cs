@@ -47,7 +47,7 @@ public abstract class Auxiliary_Functions_Transform : MainWindow
                 };
                 lines.Add(closingLine);
             }
-
+            
             var ranges = lines.Select(t => CalcRange(t, dot)).ToList();
             SelectedLine = lines[ranges.IndexOf(ranges.Min())];
         }

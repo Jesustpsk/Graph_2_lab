@@ -24,18 +24,24 @@ public abstract class AMatrix : MainWindow
     }
     public static double[,] ScaleAlongSide(double scaleFactor, Line selectedLine)
     {
-        double[,] scaleMatrix = new double[3, 3];
+        
         var sideEnd = new Point(selectedLine.X2, selectedLine.Y2);
         var sideStart = new Point(selectedLine.X1, selectedLine.Y1);
-        double dx = sideEnd.X - sideStart.X;
-        double dy = sideEnd.Y - sideStart.Y;
-        double sideLength = Math.Sqrt(dx * dx + dy * dy);
+        var dx = sideEnd.X - sideStart.X;
+        var dy = sideEnd.Y - sideStart.Y;
 
-        double scaleX = scaleFactor * (dx / sideLength);
-        double scaleY = scaleFactor * (dy / sideLength);
-        scaleMatrix[0, 0] = scaleX;
-        scaleMatrix[1, 1] = scaleY;
-        scaleMatrix[2, 2] = 1;
+        // Находим длину стороны
+        var sideLength = Math.Sqrt(dx * dx + dy * dy);
+
+        // Рассчитываем относительные коэффициенты масштабирования
+        var scaleX = scaleFactor * (dx / sideLength);
+        var scaleY = scaleFactor * (dy / sideLength);
+        var scaleMatrix = new double[3, 3]
+        {
+            {scaleX, 0, 0},
+            {0, scaleY, 0},
+            {0, 0, 1}
+        };
 
         return scaleMatrix;
     }
@@ -72,41 +78,33 @@ public abstract class AMatrix : MainWindow
         return rotationMatrix;
     }
 
-    public static List<Point> ApplyTransformation(List<Point> figure, double[,] transformationMatrix)
+    public static List<Point> ApplyTransformation(List<Point> figure, double[,] transformationMatrix, double? scale,
+        Line? side)
     {
         List<Point> transformedFigure = new List<Point>();
 
+        var sideEnd = new Point(side!.X2, side.Y2);
+        var sideStart = new Point(side.X1, side.Y1);
+        var translateX = (double)(sideStart.X - sideStart.X * scale)!;
+        var translateY = (double)(sideStart.Y - sideStart.Y * scale)!;
         foreach (var point in figure)
         {
-            // Преобразование точки с использованием матрицы преобразования
-            double x = point.X * transformationMatrix[0, 0] + point.Y * transformationMatrix[0, 1] + transformationMatrix[0, 2];
-            double y = point.X * transformationMatrix[1, 0] + point.Y * transformationMatrix[1, 1] + transformationMatrix[1, 2];
+            var x = point.X * transformationMatrix[0, 0] + point.Y * transformationMatrix[0, 1] +
+                    transformationMatrix[0, 2];
+            var y = point.X * transformationMatrix[1, 0] + point.Y * transformationMatrix[1, 1] +
+                    transformationMatrix[1, 2];
+            if (scale is null && side is null)
+            {
+                x += translateX;
+                y += translateY;
+            }
 
             transformedFigure.Add(new Point(x, y));
         }
-
         TempPoints = transformedFigure;
         return transformedFigure;
     }
-    
-    public static List<Point> ApplyTransformation(List<Point> figure, double[,] transformationMatrix, double scale, Line side)
-    {
-        List<Point> transformedFigure = new List<Point>();
 
-        foreach (var point in figure)
-        {
-            // Преобразование точки с использованием матрицы преобразования
-            double x = point.X * transformationMatrix[0, 0] + point.Y * transformationMatrix[0, 1] + transformationMatrix[0, 2];
-            double y = point.X * transformationMatrix[1, 0] + point.Y * transformationMatrix[1, 1] + transformationMatrix[1, 2];
-
-            x += (1 - scale) * side.X1;
-            y += (1 - scale) * side.Y1;
-            transformedFigure.Add(new Point(x, y));
-        }
-
-        TempPoints = transformedFigure;
-        return transformedFigure;
-    }
     public static void Fillmatrix(List<TextBox> lbox, double[,] matrix)
     {
         lbox[0].Text = matrix[0,0] + "";
