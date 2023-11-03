@@ -12,7 +12,8 @@ public abstract class AMatrix : MainWindow
 {
     public static double[,] TranslateAlongX(double deltaX)
     {
-        double[,] translationMatrix = new double[3, 3];
+        deltaX *= 10;
+        var translationMatrix = new double[3, 3];
         
         translationMatrix[0, 0] = 1;
         translationMatrix[1, 1] = 1;
@@ -47,7 +48,7 @@ public abstract class AMatrix : MainWindow
     }
     public static double[,] ReflectAboutVertex(Point vertex)
     {
-        double[,] reflectMatrix = new double[3, 3];
+        var reflectMatrix = new double[3, 3];
         
         reflectMatrix[0, 0] = -1;
         reflectMatrix[1, 1] = -1;
@@ -81,19 +82,24 @@ public abstract class AMatrix : MainWindow
     public static List<Point> ApplyTransformation(List<Point> figure, double[,] transformationMatrix, double? scale,
         Line? side)
     {
-        List<Point> transformedFigure = new List<Point>();
+        var transformedFigure = new List<Point>();
+        Point sideEnd, sideStart;
+        double translateX = 0, translateY = 0;
+        if (scale is not null && side is not null)
+        {
+            sideEnd = new Point(side!.X2, side.Y2);
+            sideStart = new Point(side.X1, side.Y1);
+            translateX = (double)(sideStart.X - sideStart.X * scale)!;
+            translateY = (double)(sideStart.Y - sideStart.Y * scale)!;
+        }
 
-        var sideEnd = new Point(side!.X2, side.Y2);
-        var sideStart = new Point(side.X1, side.Y1);
-        var translateX = (double)(sideStart.X - sideStart.X * scale)!;
-        var translateY = (double)(sideStart.Y - sideStart.Y * scale)!;
         foreach (var point in figure)
         {
             var x = point.X * transformationMatrix[0, 0] + point.Y * transformationMatrix[0, 1] +
                     transformationMatrix[0, 2];
             var y = point.X * transformationMatrix[1, 0] + point.Y * transformationMatrix[1, 1] +
                     transformationMatrix[1, 2];
-            if (scale is null && side is null)
+            if (scale is not null && side is not null)
             {
                 x += translateX;
                 y += translateY;
@@ -104,7 +110,7 @@ public abstract class AMatrix : MainWindow
         TempPoints = transformedFigure;
         return transformedFigure;
     }
-
+    
     public static void Fillmatrix(List<TextBox> lbox, double[,] matrix)
     {
         lbox[0].Text = matrix[0,0] + "";
