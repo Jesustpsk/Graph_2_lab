@@ -25,25 +25,26 @@ public abstract class AMatrix : MainWindow
     }
     public static double[,] ScaleAlongSide(double scaleFactor, Line selectedLine)
     {
-        
         var sideEnd = new Point(selectedLine.X2, selectedLine.Y2);
         var sideStart = new Point(selectedLine.X1, selectedLine.Y1);
+    
         var dx = sideEnd.X - sideStart.X;
         var dy = sideEnd.Y - sideStart.Y;
-
+    
         // Находим длину стороны
         var sideLength = Math.Sqrt(dx * dx + dy * dy);
-
+    
         // Рассчитываем относительные коэффициенты масштабирования
         var scaleX = scaleFactor * (dx / sideLength);
         var scaleY = scaleFactor * (dy / sideLength);
-        var scaleMatrix = new double[3, 3]
+    
+        var scaleMatrix = new double[3,3] 
         {
-            {scaleX, 0, 0},
-            {0, scaleY, 0},
+            {scaleX, 0, sideStart.X * (1-scaleX)}, 
+            {0, scaleY, sideStart.Y * (1-scaleY)},
             {0, 0, 1}
         };
-
+    
         return scaleMatrix;
     }
     public static double[,] ReflectAboutVertex(Point vertex)
